@@ -1,6 +1,5 @@
 version: "3"
-name: dnmp
-
+name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   php81:
     build:
@@ -11,10 +10,7 @@ services:
     tmpfs:
       - /tmp
     volumes:
-      - run:/var/run:rw,z
+      - ../../run:/var/run:rw,z
       - ../../wwwroot:/wwwroot:rw,z
       - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
     network_mode: host
-
-volumes:
-  run:

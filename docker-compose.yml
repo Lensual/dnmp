@@ -1,5 +1,5 @@
 version: "3"
-
+name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   nginx:
     build:
@@ -10,13 +10,14 @@ services:
     restart: always
     network_mode: host
     volumes:
-      - run:/var/run:rw,z
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl.conf:/etc/nginx/ssl.conf:ro
       - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
       - ./nginx/cert:/etc/nginx/cert:rw,z
       - ./nginx/templates:/etc/nginx/templates:ro
       - ./nginx/wordpress.conf:/etc/nginx/wordpress.conf:ro
+      - ./nginx/ssl-cert-snakeoil.key:/etc/nginx/ssl-cert-snakeoil.key:ro
+      - ./nginx/ssl-cert-snakeoil.pem:/etc/nginx/ssl-cert-snakeoil.pem:ro
 #      - ./nginx/minio-server.conf:/etc/nginx/minio-server.conf:ro
 #      - ./nginx/minio-location.conf:/etc/nginx/minio-location.conf:ro
 #      - ./nginx/minio-console-server.conf:/etc/nginx/minio-console-server.conf:ro
@@ -28,7 +29,7 @@ services:
       - ./wwwroot:/wwwroot:ro,z
       - ./acme.sh:/root/.acme.sh:rw,z
       # 共享run
-#      - ./run:/var/run:rw,z
+      - ./run:/var/run:rw,z
 #    ports:
 #      - ${NGINX_HTTP_HOST_BIND}:${NGINX_HTTP_HOST_PORT}:${NGINX_HTTP_PORT}
 #      - ${NGINX_HTTPS_HOST_BIND}:${NGINX_HTTPS_HOST_PORT}:${NGINX_HTTPS_PORT}
@@ -65,6 +66,3 @@ services:
 #      - NGINX_METRICBEAT_LOGSTASH_CA=${NGINX_METRICBEAT_LOGSTASH_CA}
 #      - NGINX_METRICBEAT_LOGSTASH_CERT=${NGINX_METRICBEAT_LOGSTASH_CERT}
 #      - NGINX_METRICBEAT_LOGSTASH_KEY=${NGINX_METRICBEAT_LOGSTASH_KEY}
-
-volumes:
-  run:

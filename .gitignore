@@ -1,6 +1,7 @@
 .env
 /acme.sh/**
 /wwwroot/**
+/run/**
 
 /nginx/cert/**
 /nginx/log/**
