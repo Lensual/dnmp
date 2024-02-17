@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  nginx:
+    build:
+      context: nginx
+      args:
+        VERSION: ${VERSION:-stable-alpine}
+        DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}
+    restart: always
+    network_mode: host
+    volumes:
+      - run:/var/run:rw,z
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl.conf:/etc/nginx/ssl.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
+      - ./nginx/cert:/etc/nginx/cert:rw,z
+      - ./nginx/templates:/etc/nginx/templates:ro
+      - ./nginx/wordpress.conf:/etc/nginx/wordpress.conf:ro
+#      - ./nginx/minio-server.conf:/etc/nginx/minio-server.conf:ro
+#      - ./nginx/minio-location.conf:/etc/nginx/minio-location.conf:ro
+#      - ./nginx/minio-console-server.conf:/etc/nginx/minio-console-server.conf:ro
+#      - ./nginx/minio-console-location.conf:/etc/nginx/minio-console-location.conf:ro
+      - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
+      - ./nginx/log:/var/log/nginx:rw,z
+      # ELK日志分析用 syslog采集方式
+      # - /dev/log:/dev/log:rw
+      - ./wwwroot:/wwwroot:ro,z
+      - ./acme.sh:/root/.acme.sh:rw,z
+      # 共享run
+#      - ./run:/var/run:rw,z
+#    ports:
+#      - ${NGINX_HTTP_HOST_BIND}:${NGINX_HTTP_HOST_PORT}:${NGINX_HTTP_PORT}
+#      - ${NGINX_HTTPS_HOST_BIND}:${NGINX_HTTPS_HOST_PORT}:${NGINX_HTTPS_PORT}
+#    environment:
+#      # Nginx配置文件变量
+#      - NGINX_HOST_NAME=${NGINX_HOST_NAME}
+#      - NGINX_HTTP_PORT=${NGINX_HTTP_PORT}
+#      - NGINX_HTTPS_PORT=${NGINX_HTTPS_PORT}
+#      - NGINX_SSL_CERT=${NGINX_SSL_CERT}
+#      - NGINX_SSL_CERT_KEY=${NGINX_SSL_CERT_KEY}
+
+#  nginx-filebeat:
+#    image: elastic/filebeat:8.2.3
+#    user: root
+#    volumes:
+#     - ./nginx/log:/var/log/nginx:ro,z
+#     - ./nginx/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+#     - ./nginx/filebeat/cert:/cert:ro
+#    environment:
+#      - NGINX_FILEBEAT_LOGSTASH_HOSTS=${NGINX_FILEBEAT_LOGSTASH_HOSTS}
+#      - NGINX_FILEBEAT_LOGSTASH_CA=${NGINX_FILEBEAT_LOGSTASH_CA}
+#      - NGINX_FILEBEAT_LOGSTASH_CERT=${NGINX_FILEBEAT_LOGSTASH_CERT}
+#      - NGINX_FILEBEAT_LOGSTASH_KEY=${NGINX_FILEBEAT_LOGSTASH_KEY}
+
+#  nginx-metricbeat:
+#    image: elastic/metricbeat:8.2.3
+#    depends_on:
+#      - nginx
+#    volumes:
+#      - ./nginx/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+#      - ./nginx/metricbeat/cert:/cert:ro
+#    environment:
+#      - NGINX_METRICBEAT_LOGSTASH_HOSTS=${NGINX_METRICBEAT_LOGSTASH_HOSTS}
+#      - NGINX_METRICBEAT_LOGSTASH_CA=${NGINX_METRICBEAT_LOGSTASH_CA}
+#      - NGINX_METRICBEAT_LOGSTASH_CERT=${NGINX_METRICBEAT_LOGSTASH_CERT}
+#      - NGINX_METRICBEAT_LOGSTASH_KEY=${NGINX_METRICBEAT_LOGSTASH_KEY}
+
+volumes:
+  run:

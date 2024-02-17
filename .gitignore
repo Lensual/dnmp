@@ -1,0 +1,11 @@
+.env
+/acme.sh/**
+/wwwroot/**
+
+/nginx/cert/**
+/nginx/log/**
+/nginx/dhparam.pem
+/nginx/templates/**
+!/nginx/templates/default.conf.template
+
+!.gitkeep
