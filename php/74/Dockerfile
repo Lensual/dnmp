@@ -1,4 +1,4 @@
-FROM php:8.1.27-fpm-alpine3.19
+FROM php:7.4.33-fpm-alpine3.16
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 #安装php依赖
