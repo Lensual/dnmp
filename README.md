@@ -158,6 +158,21 @@ server {
 ./nginx-recreate.sh
 ```
 
+## 使用 php composer
+
+```sh
+#进入对应php版本的容器
+cd php/81
+./shell-www-data.sh
+
+#进入站点目录
+cd /wwwroot/www.example.com
+composer -V
+```
+
+## cron TODO
+
+
 ## Licence
 
 [WTFPL](./LICENCE)
