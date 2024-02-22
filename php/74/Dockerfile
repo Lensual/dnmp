@@ -20,3 +20,4 @@ RUN install-php-extensions mcrypt
 RUN install-php-extensions opcache
 RUN install-php-extensions redis-stable
 RUN install-php-extensions @composer
+RUN install-php-extensions pcntl
