@@ -15,3 +15,18 @@ services:
       - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
       - ./crond:/etc/crontabs:ro
     network_mode: host
+  php81-crond:
+    command: crond
+    build:
+      context: .
+      args:
+        DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}
+    restart: always
+    tmpfs:
+      - /tmp
+    volumes:
+      - ../../run:/var/run:rw,z
+      - ../../wwwroot:/wwwroot:rw,z
+      - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
+      - ./crond:/etc/crontabs:ro
+    network_mode: host
