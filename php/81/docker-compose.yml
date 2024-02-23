@@ -16,7 +16,7 @@ services:
       - ./crond:/etc/crontabs:ro
     network_mode: host
   php81-crond:
-    command: crond
+    command: crond -f
     build:
       context: .
       args:
