@@ -12,5 +12,6 @@ services:
     volumes:
       - ../../run:/var/run:rw,z
       - ../../wwwroot:/wwwroot:rw,z
-      - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+      - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
+      - ./crond:/etc/crontabs:ro
     network_mode: host

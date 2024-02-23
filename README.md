@@ -140,12 +140,12 @@ server {
   server_name www.example.com;
   access_log /var/log/nginx/www.example.com_access.log main;
 
-  ssl_certificate cert/lensual.space/fullchain.pem;
-  ssl_certificate_key cert/lensual.space/key.pem;  
+  ssl_certificate cert/www.example.com/fullchain.pem;
+  ssl_certificate_key cert/www.example.com/key.pem;  
 
   include ssl.conf;
 
-  root /wwwroot/lensual.space;
+  root /wwwroot/www.example.com;
   
   #或者 fastcgi_pass unix:/var/run/php81.sock;
   include wordpress.conf;

@@ -7,6 +7,7 @@ ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
 #替换alpine镜像源
 RUN sed -i "s@dl-cdn.alpinelinux.org@${DOCKER_APK_MIRROR}@g" /etc/apk/repositories
 RUN apk update
+RUN apk add sudo
 RUN install-php-extensions gd
 RUN install-php-extensions pdo_mysql
 RUN install-php-extensions mysqli
