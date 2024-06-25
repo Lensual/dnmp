@@ -13,12 +13,13 @@ Docker Nginx ~~Mysql~~ Php
 数据库因为在实践中很可能是独立的，这里不包含，自己部署就行了。
 
 ## 特性
+
 - 内置模块
   - ngx_http_vhost_traffic_status
   - ngx_http_brotli_filter
   - ngx_http_brotli_static
   - ngx_http_headers_more_filter
-- 可选择Nginx版本，默认使用stable-alpine
+- 可选择Nginx版本，默认使用stable-alpine-otel
 - nginx.conf
   - [优化]默认开启http2
   - [安全]默认移除nginx(`Server`)和php(`X-Powered-By`)头部标识
@@ -59,7 +60,7 @@ vim .env
 
 构建nginx
 
-```
+```sh
 docker compose build
 ```
 

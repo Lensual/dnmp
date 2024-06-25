@@ -1,4 +1,4 @@
-ARG VERSION=stable-alpine
+ARG VERSION=stable-alpine-otel
 FROM nginx:${VERSION} as build
 
 # 添加nginx编译依赖
@@ -18,18 +18,18 @@ RUN set -x \
 # 一步一个缓存，避免下载失败全部重新下载
 RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 RUN git clone -b v0.2.1 https://github.com/vozlt/nginx-module-vts.git
-RUN git clone https://github.com/google/ngx_brotli.git
-#&& cd ngx_brotli && git checkout 8f726ea6614eb5541812647a673abd8f66eb4660
+RUN git clone -b master https://github.com/google/ngx_brotli.git \
+  && cd ngx_brotli && git checkout a71f9312c2deb28875acc7bacfdd5695a111aa53
 RUN cd ngx_brotli && git submodule update --init
-RUN git clone https://github.com/openresty/headers-more-nginx-module
+RUN git clone -b v0.37 https://github.com/openresty/headers-more-nginx-module
 
 # 编译brotli
 RUN cd ngx_brotli/deps/brotli \
   && mkdir out && cd out \
   && cmake -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=OFF \
-    -DCMAKE_C_FLAGS="-Ofast -flto -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections" \
-    -DCMAKE_CXX_FLAGS="-Ofast -flto -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections" \
+    -DCMAKE_C_FLAGS="-Ofast -march=native -mtune=native -flto -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections" \
+    -DCMAKE_CXX_FLAGS="-Ofast -march=native -mtune=native -flto -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections" \
     -DCMAKE_INSTALL_PREFIX=./installed .. \
   && cmake --build . --config Release --target brotlienc
 
