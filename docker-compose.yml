@@ -1,4 +1,3 @@
-version: "3"
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   nginx:
