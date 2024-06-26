@@ -2,15 +2,35 @@
 
 Docker Nginx ~~Mysql~~ Php
 
-## 关于这个项目
-
 这个编排脚本是本人工作日常积累得来，经过删减和整理后用于自建服务器。
 
-仅面向单机部署Nginx或PHP网站使用。**不适用于分布式和生产环境部署。本人不对使用此脚本产生的任何问题负责。**
+仅面向单机部署Nginx或PHP网站使用。
+
+**不适用于分布式和生产环境部署。**
+
+**本人不对使用此脚本产生的任何问题负责。**
 
 `network_mode`使用`host`模式，减少网络转发消耗。
 
 数据库因为在实践中很可能是独立的，这里不包含，自己部署就行了。
+
+## 目录
+
+- [DNMP](#dnmp)
+  - [目录](#目录)
+  - [特性](#特性)
+  - [部署 Nginx](#部署-nginx)
+  - [添加网站](#添加网站)
+  - [可选部署项](#可选部署项)
+    - [使用 acme.sh 申请 ssl 证书](#使用-acmesh-申请-ssl-证书)
+    - [开启 PHP](#开启-php)
+    - [使用 php composer](#使用-php-composer)
+  - [cron TODO](#cron-todo)
+  - [中国大陆境内部署](#中国大陆境内部署)
+  - [Licence](#licence)
+
+---------------------------------
+
 
 ## 特性
 
@@ -21,11 +41,11 @@ Docker Nginx ~~Mysql~~ Php
   - ngx_http_headers_more_filter
 - 可选择Nginx版本，默认使用stable-alpine-otel
 - nginx.conf
-  - [优化]默认开启http2
-  - [安全]默认移除nginx(`Server`)和php(`X-Powered-By`)头部标识
-  - [安全]默认开启X-XSS-Protection
-  - [优化]默认开启`gzip`和`brotli`
-  - [优化]常规IO优化 `aio threads` `directio` `sendfile` `nopush` `nodelay` `open_file_cache` `keepalive`
+  - [优化] 默认开启http2
+  - [安全] 默认移除nginx(`Server`)和php(`X-Powered-By`)头部标识
+  - [安全] 默认开启X-XSS-Protection
+  - [优化] 默认开启`gzip`和`brotli`
+  - [优化] 常规IO优化 `aio threads` `directio` `sendfile` `nopush` `nodelay` `open_file_cache` `keepalive`
   - 给予了默认自签名SSL证书snakeoil
 - 内置配置模板，可直接include
   - ssl.conf
@@ -37,19 +57,19 @@ Docker Nginx ~~Mysql~~ Php
     - [安全] 启用 ssl_prefer_server_ciphers
     - [优化] 启用KTLS卸载
   - wordpress.conf
-    - 禁止访问upload目录的`.php`文件
-    - 进制访问`.`开头的文件
-    - 不记录静态资源访问的日志
-    - 防盗链
-    - 资源文件最大过期时间
-    - unix socket php8.1
+    - [安全] 禁止访问 upload 目录的`.php`文件
+    - [安全] 禁止访问 URL 存在 `/.` 的路径
+    - [优化] 不记录静态资源访问的日志 `access_log off;`
+    - [安全] 防盗链
+    - [优化] 静态资源设置为最大过期时间 `expires max;`
+    - [优化] 使用 unix socket 与 php8.1 容器通信
   - proxy.conf
-    - 添加代理header `HOST` `X-Real-IP` `X-Forwarded-For` `X-Forwarded-Proto` `Upgrade` `Connection`
-    - 关闭代理缓存防止docker overlay写炸
-    - 开启代理keepalive
-    - 以http 1.1进行代理
+    - [优化] 添加代理header `HOST` `X-Real-IP` `X-Forwarded-For` `X-Forwarded-Proto` `Upgrade` `Connection`
+    - [优化] 关闭代理缓存防止docker overlay写炸
+    - [优化] 开启代理keepalive
+    - [优化] 以http 1.1进行代理
 
-## 部署Nginx
+## 部署 Nginx
 
 复制一份`.env.sample`到`.env`，并配置好
 
@@ -79,7 +99,19 @@ openssl dhparam -out ./nginx/dhparam.pem 2048
 docker compose up -d
 ```
 
-## 使用acme.sh申请ssl证书
+## 添加网站
+
+配置路径：`nginx/templates/www.example.com.conf.template`
+
+配置文件一定以`.conf.template`结束，这是nginx官方docker镜像的配置文件模板功能所限制的
+
+配置文件中可以使用docker的环境变量
+
+templatep配置文件不支持热重启，需要重建容器`./nginx-recreate.sh`
+
+## 可选部署项
+
+### 使用 acme.sh 申请 ssl 证书
 
 使用acme.sh申请ssl证书
 
@@ -109,17 +141,7 @@ docker compose run --rm \
 
 之后配置好nginx站点使用`cert/fullchain.pem`和`cert/key.pem`
 
-## 添加网站
-
-配置路径：`nginx/templates/www.example.com.conf.template`
-
-配置文件一定以`.conf.template`结束，这是nginx官方docker镜像的配置文件模板功能所限制的
-
-配置文件中可以使用docker的环境变量
-
-templatep配置文件不支持热重启，需要重建容器`./nginx-recreate.sh`
-
-## 开启PHP（可选）
+### 开启 PHP
 
 以php8.1和wordpress为例
 
@@ -159,7 +181,7 @@ server {
 ./nginx-recreate.sh
 ```
 
-## 使用 php composer
+### 使用 php composer
 
 ```sh
 #进入对应php版本的容器
@@ -173,6 +195,15 @@ composer -V
 
 ## cron TODO
 
+## 中国大陆境内部署
+
+`Docker Hub`可以使用第三方mirror，自行查找
+
+github访问加速可以在相关`Dockerfile`文件中增加
+
+```Dockerfile
+RUN git config --global url."https://gitclone.com/".insteadOf https://
+```
 
 ## Licence
 
