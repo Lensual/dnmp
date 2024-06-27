@@ -55,7 +55,9 @@ RUN set -x \
 FROM nginx:${VERSION}
 
 ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
-RUN apk add --no-cache logrotate acme.sh
+RUN set -x \
+  && sed -i "s@dl-cdn.alpinelinux.org@${DOCKER_APK_MIRROR}@g" /etc/apk/repositories \
+  && apk add --no-cache logrotate acme.sh
 
 COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_vhost_traffic_status_module.so /usr/lib/nginx/modules/
 COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/
