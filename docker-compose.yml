@@ -1,14 +1,15 @@
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   nginx:
+    profiles: [ nginx ]
+    extends:
+      service: nginx
+      file: docker-compose.${DIST_VERSION:-debian}.yml
     build:
       context: nginx
-      dockerfile: ${NGINX_DOCKERFILE:-Dockerfile.trixie}
       args:
-        VERSION: ${VERSION:-stable}
-        DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}
-        DOCKER_APT_MIRROR: ${DOCKER_APT_MIRROR:-dl-cdn.alpinelinux.org}
-    restart: always
+        VERSION: ${NGINX_VERSION:-stable}
+    restart: unless-stopped
     network_mode: host
     ulimits:
       nproc: 127607
@@ -30,13 +31,63 @@ services:
       - ./acme.sh:/root/.acme.sh:rw,z
       # 共享run
       - ./run:/var/run:rw,z
-#    ports:
-#      - ${NGINX_HTTP_HOST_BIND}:${NGINX_HTTP_HOST_PORT}:${NGINX_HTTP_PORT}
-#      - ${NGINX_HTTPS_HOST_BIND}:${NGINX_HTTPS_HOST_PORT}:${NGINX_HTTPS_PORT}
-#    environment:
-#      # Nginx配置文件变量
-#      - NGINX_HOST_NAME=${NGINX_HOST_NAME}
-#      - NGINX_HTTP_PORT=${NGINX_HTTP_PORT}
-#      - NGINX_HTTPS_PORT=${NGINX_HTTPS_PORT}
-#      - NGINX_SSL_CERT=${NGINX_SSL_CERT}
-#      - NGINX_SSL_CERT_KEY=${NGINX_SSL_CERT_KEY}
+  php74:
+    profiles: [ php74 ]
+    extends:
+      file: php/74/docker-compose.yml
+      service: php74
+  php74-crond:
+    profiles: [ php74 ]
+    extends:
+      file: php/74/docker-compose.yml
+      service: php74-crond
+  php81:
+    profiles: [ php81 ]
+    extends:
+      file: php/81/docker-compose.yml
+      service: php81
+  php81-crond:
+    profiles: [ php81 ]
+    extends:
+      file: php/81/docker-compose.yml
+      service: php81-crond
+  php82:
+    profiles: [ php82 ]
+    extends:
+      file: php/82/docker-compose.yml
+      service: php82
+  php82-crond:
+    profiles: [ php82 ]
+    extends:
+      file: php/82/docker-compose.yml
+      service: php82-crond
+  php83:
+    profiles: [ php83 ]
+    extends:
+      file: php/83/docker-compose.yml
+      service: php83
+  php83-crond:
+    profiles: [ php83 ]
+    extends:
+      file: php/83/docker-compose.yml
+      service: php83-crond
+  php84:
+    profiles: [ php84 ]
+    extends:
+      file: php/84/docker-compose.yml
+      service: php84
+  php84-crond:
+    profiles: [ php84 ]
+    extends:
+      file: php/84/docker-compose.yml
+      service: php84-crond
+  php85:
+    profiles: [ php85 ]
+    extends:
+      file: php/85/docker-compose.yml
+      service: php85
+  php85-crond:
+    profiles: [ php85 ]
+    extends:
+      file: php/85/docker-compose.yml
+      service: php85-crond

@@ -1,0 +1,6 @@
+services:
+  nginx:
+    build:
+      dockerfile: alpine.Dockerfile
+      args:
+        DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}

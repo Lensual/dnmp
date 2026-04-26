@@ -1,0 +1,6 @@
+services:
+  php74:
+    build:
+      dockerfile: debian.Dockerfile
+      args:
+        DOCKER_APT_MIRROR: ${DOCKER_APT_MIRROR:-deb.debian.org}

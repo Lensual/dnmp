@@ -1,11 +1,12 @@
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   php81:
+    extends:
+      service: php81
+      file: docker-compose.${DIST_VERSION:-debian}.yml
     build:
       context: .
-      args:
-        DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}
-    restart: always
+    restart: unless-stopped
     tmpfs:
       - /tmp
     volumes:
@@ -15,12 +16,13 @@ services:
       - ./crond:/etc/crontabs:ro
     network_mode: host
   php81-crond:
+    extends:
+      service: php81
+      file: docker-compose.${DIST_VERSION:-debian}.yml
     command: crond -f
     build:
       context: .
-      args:
-        DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}
-    restart: always
+    restart: unless-stopped
     tmpfs:
       - /tmp
     volumes:

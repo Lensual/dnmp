@@ -1,13 +1,16 @@
-FROM php:8.1.27-fpm-alpine3.19
+FROM php:8.5.5-fpm-alpine3.23
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-#安装php依赖
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+# 替换alpine镜像源
 ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
-#替换alpine镜像源
 RUN sed -i "s@dl-cdn.alpinelinux.org@${DOCKER_APK_MIRROR}@g" /etc/apk/repositories
-RUN apk update
-RUN apk add sudo
+
+RUN apk add --no-cache \
+    ca-certificates
+
+# 安装php依赖
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
 RUN install-php-extensions gd
 RUN install-php-extensions pdo_mysql
 RUN install-php-extensions mysqli

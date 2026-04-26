@@ -1,8 +1,8 @@
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
-  php74:
+  php83:
     extends:
-      service: php74
+      service: php83
       file: docker-compose.${DIST_VERSION:-debian}.yml
     build:
       context: .
@@ -15,9 +15,9 @@ services:
       - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
       - ./crond:/etc/crontabs:ro
     network_mode: host
-  php74-crond:
+  php83-crond:
     extends:
-      service: php74
+      service: php83
       file: docker-compose.${DIST_VERSION:-debian}.yml
     command: crond -f
     build:

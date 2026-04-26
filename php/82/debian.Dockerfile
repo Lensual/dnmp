@@ -1,13 +1,18 @@
-FROM php:7.4.33-fpm-alpine3.16
+FROM php:8.2.30-fpm-trixie
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-#安装php依赖
+# 替换debian镜像源
+ARG DOCKER_APT_MIRROR=deb.debian.org
+RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list.d/debian.sources
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    cron \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# 安装php依赖
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
-#替换alpine镜像源
-RUN sed -i "s@dl-cdn.alpinelinux.org@${DOCKER_APK_MIRROR}@g" /etc/apk/repositories
-RUN apk update
-RUN apk add sudo
+
 RUN install-php-extensions gd
 RUN install-php-extensions pdo_mysql
 RUN install-php-extensions mysqli
