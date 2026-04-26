@@ -1,4 +1,4 @@
-FROM php:8.1.34-fpm-alpine3.22
+FROM php:8.0.30-fpm-alpine3.16
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # 替换alpine镜像源

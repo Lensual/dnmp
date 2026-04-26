@@ -1,4 +1,4 @@
-FROM php:8.1.34-fpm-alpine3.22
+FROM php:5.6.40-fpm-alpine3.8
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # 替换alpine镜像源
@@ -20,7 +20,6 @@ RUN install-php-extensions exif
 RUN install-php-extensions imagick-stable
 RUN install-php-extensions bcmath
 RUN install-php-extensions intl
-RUN install-php-extensions mcrypt
 RUN install-php-extensions opcache
 RUN install-php-extensions redis-stable
 RUN install-php-extensions @composer

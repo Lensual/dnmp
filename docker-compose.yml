@@ -31,6 +31,26 @@ services:
       - ./acme.sh:/root/.acme.sh:rw,z
       # 共享run
       - ./run:/var/run:rw,z
+  php56:
+    profiles: [ php56 ]
+    extends:
+      file: php/56/docker-compose.yml
+      service: php56
+  php56-crond:
+    profiles: [ php56 ]
+    extends:
+      file: php/56/docker-compose.yml
+      service: php56-crond
+  php72:
+    profiles: [ php72 ]
+    extends:
+      file: php/72/docker-compose.yml
+      service: php72
+  php72-crond:
+    profiles: [ php72 ]
+    extends:
+      file: php/72/docker-compose.yml
+      service: php72-crond
   php74:
     profiles: [ php74 ]
     extends:
@@ -41,6 +61,16 @@ services:
     extends:
       file: php/74/docker-compose.yml
       service: php74-crond
+  php80:
+    profiles: [ php80 ]
+    extends:
+      file: php/80/docker-compose.yml
+      service: php80
+  php80-crond:
+    profiles: [ php80 ]
+    extends:
+      file: php/80/docker-compose.yml
+      service: php80-crond
   php81:
     profiles: [ php81 ]
     extends:

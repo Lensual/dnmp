@@ -1,0 +1,33 @@
+name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
+services:
+  php72:
+    extends:
+      service: php72
+      file: docker-compose.${DIST_VERSION:-debian}.yml
+    build:
+      context: .
+    restart: unless-stopped
+    tmpfs:
+      - /tmp
+    volumes:
+      - ../../run:/var/run:rw,z
+      - ../../wwwroot:/wwwroot:rw,z
+      - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
+      - ./crond:/etc/crontabs:ro
+    network_mode: host
+  php72-crond:
+    extends:
+      service: php72
+      file: docker-compose.${DIST_VERSION:-debian}.yml
+    command: crond -f
+    build:
+      context: .
+    restart: unless-stopped
+    tmpfs:
+      - /tmp
+    volumes:
+      - ../../run:/var/run:rw,z
+      - ../../wwwroot:/wwwroot:rw,z
+      - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
+      - ./crond:/etc/crontabs:ro
+    network_mode: host
