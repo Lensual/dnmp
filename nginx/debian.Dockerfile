@@ -55,7 +55,7 @@ ARG DOCKER_APT_MIRROR=deb.debian.org
 RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list.d/debian.sources
 RUN apt-get update && apt-get install -y --no-install-recommends \
   logrotate \
-  cron \
+  busybox \
   acme.sh \
   && rm -rf /var/lib/apt/lists/*
 
@@ -66,7 +66,6 @@ COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_headers_more_filter_modu
 
 # 添加crond配置文件
 COPY --chown=root:root --chmod=775 ./docker-entrypoint.d/* /docker-entrypoint.d/
-COPY --chown=root:root --chmod=755 ./crond/daily/* /etc/periodic/daily/
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \

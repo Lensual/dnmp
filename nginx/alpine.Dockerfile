@@ -64,6 +64,5 @@ COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_headers_more_filter_modu
 
 # 添加crond配置文件
 COPY --chown=root:root --chmod=775 ./docker-entrypoint.d/* /docker-entrypoint.d/
-COPY --chown=root:root --chmod=755 ./crond/daily/* /etc/periodic/daily/
 
 RUN apk add --no-cache logrotate ca-certificates

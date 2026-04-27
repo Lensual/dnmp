@@ -13,10 +13,9 @@ services:
       - ../../run:/var/run:rw,z
       - ../../wwwroot:/wwwroot:rw,z
       - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
-      - ./crond:/etc/crontabs:ro
+      - ./crontabs:/var/spool/cron/crontabs
     network_mode: host
   php84-crond:
     extends:
       service: php84
-    # debian: cron, alpine: crond
-    command: cron -f -l 8 || crond -f -l 8
+    command: busybox crond -f -l 8

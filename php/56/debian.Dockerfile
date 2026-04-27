@@ -6,7 +6,7 @@ ARG DOCKER_APT_MIRROR=deb.debian.org
 RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    cron \
+    busybox \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
