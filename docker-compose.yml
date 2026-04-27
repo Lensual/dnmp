@@ -31,6 +31,12 @@ services:
       - ./acme.sh:/root/.acme.sh:rw,z
       # 共享run
       - ./run:/var/run:rw,z
+  nginx-crond:
+    profiles: [ nginx ]
+    extends:
+      service: nginx
+    # debian: cron, alpine: crond
+    command: cron -f -l 8 || crond -f -l 8
   php56:
     profiles: [ php56 ]
     extends:
