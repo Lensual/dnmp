@@ -5,7 +5,7 @@ FROM nginx:${VERSION} AS build
 ARG DOCKER_APT_MIRROR=deb.debian.org
 RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list.d/debian.sources
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends --no-install-suggests \
     wget \
     git \
     gcc \
@@ -53,7 +53,7 @@ FROM nginx:${VERSION}
 
 ARG DOCKER_APT_MIRROR=deb.debian.org
 RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list.d/debian.sources
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
   logrotate \
   busybox \
   acme.sh \
@@ -67,6 +67,6 @@ COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_headers_more_filter_modu
 # 添加crond配置文件
 COPY --chown=root:root --chmod=775 ./docker-entrypoint.d/* /docker-entrypoint.d/
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
   ca-certificates \
   && rm -rf /var/lib/apt/lists/*
