@@ -1,9 +1,14 @@
 FROM php:5.6.40-fpm-stretch
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
+# debian archive
+RUN echo "deb [trusted=yes] http://archive.debian.org/debian stretch main non-free contrib" > /etc/apt/sources.list
+RUN echo "deb-src [trusted=yes] http://archive.debian.org/debian stretch main non-free contrib" >> /etc/apt/sources.list
+RUN echo "deb [trusted=yes] http://archive.debian.org/debian-security stretch/updates main non-free contrib" >> /etc/apt/sources.list
+
 # 替换debian镜像源
-ARG DOCKER_APT_MIRROR=deb.debian.org
-RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list
+# ARG DOCKER_APT_MIRROR=deb.debian.org
+# RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     busybox \
