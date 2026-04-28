@@ -25,7 +25,7 @@ services:
       - ./nginx/templates:/etc/nginx/templates:ro
       - ./nginx/crontabs:/var/spool/cron/crontabs
       # ssl
-      - ./nginx/cert:/etc/nginx/cert:rw,z
+      - ./nginx/cert:/etc/nginx/cert:ro,z
       - ./nginx/ssl-cert-snakeoil.key:/etc/nginx/ssl-cert-snakeoil.key:ro
       - ./nginx/ssl-cert-snakeoil.pem:/etc/nginx/ssl-cert-snakeoil.pem:ro
       - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
