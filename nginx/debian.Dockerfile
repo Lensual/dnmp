@@ -56,7 +56,6 @@ RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list.d/deb
 RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
   logrotate \
   busybox \
-  acme.sh \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_vhost_traffic_status_module.so /usr/lib/nginx/modules/

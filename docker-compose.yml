@@ -29,7 +29,6 @@ services:
       - ./nginx/ssl-cert-snakeoil.key:/etc/nginx/ssl-cert-snakeoil.key:ro
       - ./nginx/ssl-cert-snakeoil.pem:/etc/nginx/ssl-cert-snakeoil.pem:ro
       - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
-      - ./acme.sh:/root/.acme.sh:rw,z
       # log
       - ./nginx/log:/var/log/nginx:rw,z
       # data
@@ -41,6 +40,16 @@ services:
     extends:
       service: nginx
     command: busybox crond -f -l 8
+  acme-sh:
+    profiles: [acme]
+    image: neilpang/acme.sh
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./acme.sh:/acme.sh:rw,z
+      - ./nginx/cert:/acme.sh.d:rw,z
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: daemon
   php56:
     profiles: [ php56 ]
     extends:

@@ -112,33 +112,31 @@ templatep配置文件不支持热重启，需要重建容器`./nginx-recreate.sh
 
 ### 使用 acme.sh 申请 ssl 证书
 
-使用acme.sh申请ssl证书
+使用 acme.sh 申请 ssl 证书：
 
 ```sh
-# 用站点管理员邮箱注册acme
-docker compose run --rm nginx acme.sh --register-account -m admin@example.com
-# 申请多个泛域名的ssl证书
-docker compose run --rm \
+# 注册 acme 账号
+docker compose exec acme-sh --register-account -m admin@example.com
+# 申请泛域名证书（以阿里云 DNS 为例）
+docker compose exec 
   -e Ali_Key=xxxxxxxxxxxxxxxxxxx \
   -e Ali_Secret=xxxxxxxxxxxxxxxx \
-  nginx acme.sh --issue --keylength ec-256 \
+  acme-sh \
+  --issue --keylength ec-256 \
   --dns dns_ali \
-  -d www.example.com
-# 创建证书安装目录
-docker compose run --rm nginx mkdir -p /etc/nginx/cert/www.example.com
-# 安装证书
-docker compose run --rm \
-  nginx \
-  acme.sh --install-cert --ecc -d www.example.com \
-  --cert-file /etc/nginx/cert/www.example.com/cert.pem \
-  --key-file /etc/nginx/cert/www.example.com/key.pem \
-  --fullchain-file /etc/nginx/cert/www.example.com/fullchain.pem \
-  --reloadcmd "nginx -s reload"
+  -d example.com -d *.example.com
+# 安装证书到 cert 目录
+docker compose exec \
+    -e DEPLOY_DOCKER_CONTAINER_LABEL=sh.acme.autoload.domain=example.com \
+    -e DEPLOY_DOCKER_CONTAINER_KEY_FILE=/etc/nginx/cert/example.com/key.pem \
+    -e DEPLOY_DOCKER_CONTAINER_CERT_FILE="/etc/nginx/cert/example.com/cert.pem" \
+    -e DEPLOY_DOCKER_CONTAINER_CA_FILE="/etc/nginx/cert/example.com/ca.pem" \
+    -e DEPLOY_DOCKER_CONTAINER_FULLCHAIN_FILE="/etc/nginx/cert/example.com/full.pem" \
+    -e DEPLOY_DOCKER_CONTAINER_RELOAD_CMD="nginx -s reload" \
+    acme-sh --deploy -d example.com  --deploy-hook docker
 ```
 
-这里reloadcmd可能会报错说nginx没有启动，可以忽略
-
-之后配置好nginx站点使用`cert/fullchain.pem`和`cert/key.pem`
+之后配置好 nginx 站点使用 `cert/fullchain.pem` 和 `cert/key.pem`
 
 ### 开启 PHP
 

@@ -6,6 +6,5 @@
 # 0	3	*	*	6	run-parts /etc/periodic/weekly
 # 0	5	1	*	*	run-parts /etc/periodic/monthly
 
-# acme.sh
-0 0 * * *  /usr/bin/acme.sh --cron --home "/root/.acme.sh" --log
 # TODO logrotate
+# TODO crond pid namespace

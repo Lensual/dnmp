@@ -54,8 +54,7 @@ FROM nginx:${VERSION}
 ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
 RUN sed -i "s@dl-cdn.alpinelinux.org@${DOCKER_APK_MIRROR}@g" /etc/apk/repositories
 RUN apk add --no-cache \
-  logrotate \
-  acme.sh
+  logrotate
 
 COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_vhost_traffic_status_module.so /usr/lib/nginx/modules/
 COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/
@@ -65,4 +64,4 @@ COPY --from=build /nginx-${NGINX_VERSION}/objs/ngx_http_headers_more_filter_modu
 # 添加crond配置文件
 COPY --chown=root:root --chmod=775 ./docker-entrypoint.d/* /docker-entrypoint.d/
 
-RUN apk add --no-cache logrotate ca-certificates
+RUN apk add --no-cache ca-certificates
