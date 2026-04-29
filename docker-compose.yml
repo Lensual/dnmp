@@ -73,6 +73,11 @@ services:
     extends:
       file: mariadb/docker-compose.yml
       service: mariadb
+  redis:
+    profiles: [ redis ]
+    extends:
+      file: redis/docker-compose.yml
+      service: redis
   php56:
     profiles: [ php56 ]
     extends:

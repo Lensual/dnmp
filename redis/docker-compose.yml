@@ -1,0 +1,13 @@
+name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
+services:
+  redis:
+    image: redis:7-${DIST_VERSION:-alpine}
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data:/data:rw,z
+      - ./conf.d:/usr/local/etc/redis:ro,z
+      - ./logs:/var/log/redis:rw,z
+    command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
