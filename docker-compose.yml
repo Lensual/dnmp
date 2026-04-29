@@ -63,6 +63,16 @@ services:
       - ./nginx/cert:/acme.sh.d:rw,z
       - /var/run/docker.sock:/var/run/docker.sock
     command: daemon
+  mysql:
+    profiles: [ mysql ]
+    extends:
+      file: mysql/docker-compose.yml
+      service: mysql
+  mariadb:
+    profiles: [ mariadb ]
+    extends:
+      file: mariadb/docker-compose.yml
+      service: mariadb
   php56:
     profiles: [ php56 ]
     extends:

@@ -1,0 +1,16 @@
+name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
+services:
+  mariadb:
+    image: mariadb:lts
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data:/var/lib/mysql:rw,z
+      - ./conf.d:/etc/mysql/conf.d:ro,z
+      - ./logs:/var/log/mysql:rw,z
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-}
+      MARIADB_USER: ${MARIADB_USER:-}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:-}

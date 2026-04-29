@@ -1,0 +1,16 @@
+name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data:/var/lib/mysql:rw,z
+      - ./conf.d:/etc/mysql/conf.d:ro,z
+      - ./logs:/var/log/mysql:rw,z
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-}
+      MYSQL_USER: ${MYSQL_USER:-}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-}

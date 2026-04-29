@@ -1,6 +1,6 @@
 # DNMP
 
-Docker Nginx ~~Mysql~~ Php
+Docker Nginx Mysql Php
 
 这个编排脚本是本人工作日常积累得来，经过删减和整理后用于自建服务器。
 
@@ -12,8 +12,6 @@ Docker Nginx ~~Mysql~~ Php
 
 `network_mode`使用`host`模式，减少网络转发消耗。
 
-数据库因为在实践中很可能是独立的，这里不包含，自己部署就行了。
-
 ## 目录
 
 - [DNMP](#dnmp)
@@ -22,6 +20,8 @@ Docker Nginx ~~Mysql~~ Php
   - [部署 Nginx](#部署-nginx)
   - [添加网站](#添加网站)
   - [可选部署项](#可选部署项)
+    - [开启 MySQL](#开启-mysql)
+    - [开启 MariaDB](#开启-mariadb)
     - [使用 acme.sh 申请 ssl 证书](#使用-acmesh-申请-ssl-证书)
     - [开启 PHP](#开启-php)
     - [使用 php composer](#使用-php-composer)
@@ -109,6 +109,42 @@ docker compose up -d
 templatep配置文件不支持热重启，需要重建容器`./nginx-recreate.sh`
 
 ## 可选部署项
+
+### 开启 MySQL
+
+在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `mysql`：
+
+```sh
+COMPOSE_PROFILES=nginx,acme,php85,mysql
+```
+
+然后启动：
+
+```sh
+docker compose up -d
+```
+
+数据目录：`mysql/data`
+配置目录：`mysql/conf.d`
+日志目录：`mysql/logs`
+
+### 开启 MariaDB
+
+在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `mariadb`：
+
+```sh
+COMPOSE_PROFILES=nginx,acme,php85,mariadb
+```
+
+然后启动：
+
+```sh
+docker compose up -d
+```
+
+数据目录：`mariadb/data`
+配置目录：`mariadb/conf.d`
+日志目录：`mariadb/logs`
 
 ### 使用 acme.sh 申请 ssl 证书
 
