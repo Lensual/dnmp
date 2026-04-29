@@ -63,21 +63,21 @@ services:
       - ./nginx/cert:/acme.sh.d:rw,z
       - /var/run/docker.sock:/var/run/docker.sock
     command: daemon
-  mysql:
-    profiles: [ mysql ]
+  mysql80:
+    profiles: [ mysql80 ]
     extends:
-      file: mysql/docker-compose.yml
-      service: mysql
+      file: mysql80/docker-compose.yml
+      service: mysql80
   mariadb:
     profiles: [ mariadb ]
     extends:
       file: mariadb/docker-compose.yml
       service: mariadb
-  redis:
-    profiles: [ redis ]
+  redis8:
+    profiles: [ redis8 ]
     extends:
-      file: redis/docker-compose.yml
-      service: redis
+      file: redis/8/docker-compose.yml
+      service: redis8
   php56:
     profiles: [ php56 ]
     extends:

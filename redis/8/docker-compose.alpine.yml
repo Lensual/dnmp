@@ -1,0 +1,3 @@
+services:
+  redis8:
+    image: ${DOCKER_REGISTRY:-docker.io}/redis:8.6.2-alpine

@@ -116,7 +116,7 @@ templatep配置文件不支持热重启，需要重建容器`./nginx-recreate.sh
 在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `mysql`：
 
 ```sh
-COMPOSE_PROFILES=nginx,acme,php85,mysql
+COMPOSE_PROFILES=nginx,acme,php85,mysql8
 ```
 
 然后启动：
@@ -152,7 +152,7 @@ docker compose up -d
 在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `redis`：
 
 ```sh
-COMPOSE_PROFILES=nginx,acme,php85,mysql,redis
+COMPOSE_PROFILES=nginx,acme,php85,mysql8,redis8
 ```
 
 然后启动：

@@ -1,7 +1,7 @@
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
-  mysql:
-    image: ${DOCKER_REGISTRY:-docker.io}/mysql:8.0
+  mysql80:
+    image: ${DOCKER_REGISTRY:-docker.io}/mysql:8.0.46
     restart: unless-stopped
     network_mode: host
     volumes:
