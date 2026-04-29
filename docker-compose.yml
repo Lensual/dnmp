@@ -66,7 +66,7 @@ services:
   mysql80:
     profiles: [ mysql80 ]
     extends:
-      file: mysql80/docker-compose.yml
+      file: mysql/80/docker-compose.yml
       service: mysql80
   mariadb:
     profiles: [ mariadb ]
