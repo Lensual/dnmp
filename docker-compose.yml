@@ -41,7 +41,7 @@ services:
       service: nginx
     command: busybox crond -f -l 8
   acme-sh:
-    profiles: [acme]
+    profiles: [ acme ]
     image: neilpang/acme.sh
     restart: unless-stopped
     network_mode: host
