@@ -3,7 +3,11 @@ server {
   #listen ${NGINX_HTTPS_PORT} ssl fastopen=3 reuseport default_server;
   listen 80 fastopen=3 reuseport default_server;
   listen 443 ssl fastopen=3 reuseport default_server;
-  listen 443 quic reuseport;
+  listen 443 quic reuseport default_server;
+
+  # used to advertise the availability of HTTP/3
+  add_header Alt-Svc 'h3=":443"; ma=86400';
+
   server_name  _;
 
   ssl_certificate ssl-cert-snakeoil.pem;
