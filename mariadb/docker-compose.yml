@@ -1,7 +1,7 @@
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   mariadb:
-    image: mariadb:lts
+    image: ${DOCKER_REGISTRY:-docker.io}/mariadb:lts
     restart: unless-stopped
     network_mode: host
     volumes:

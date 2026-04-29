@@ -1,4 +1,5 @@
-FROM php:8.0.30-fpm-bullseye
+ARG DOCKER_REGISTRY=docker.io
+FROM ${DOCKER_REGISTRY}/php:8.0.30-fpm-bullseye
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # 替换debian镜像源
@@ -11,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --no-install-su
     && rm -rf /var/lib/apt/lists/*
 
 # 安装php依赖
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=${DOCKER_REGISTRY}/mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN install-php-extensions gd
 RUN install-php-extensions pdo_mysql

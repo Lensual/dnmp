@@ -249,7 +249,11 @@ composer -V
 
 ## 中国大陆境内部署
 
-`Docker Hub`可以使用第三方mirror，自行查找
+`Docker Hub` 镜像拉取可以使用第三方 mirror，在 `.env` 中设置 `DOCKER_REGISTRY`：
+
+```sh
+DOCKER_REGISTRY=dockerproxy.cn
+```
 
 github访问加速可以在相关`Dockerfile`文件中增加
 

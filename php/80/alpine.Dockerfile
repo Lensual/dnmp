@@ -1,4 +1,5 @@
-FROM php:8.0.30-fpm-alpine3.16
+ARG DOCKER_REGISTRY=docker.io
+FROM ${DOCKER_REGISTRY}/php:8.0.30-fpm-alpine3.16
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # 替换alpine镜像源
@@ -9,7 +10,7 @@ RUN apk add --no-cache \
     ca-certificates
 
 # 安装php依赖
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=${DOCKER_REGISTRY}/mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN install-php-extensions gd
 RUN install-php-extensions pdo_mysql

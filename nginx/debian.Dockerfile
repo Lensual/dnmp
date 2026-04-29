@@ -1,5 +1,6 @@
 ARG VERSION=stable-trixie
-FROM nginx:${VERSION} AS build
+ARG DOCKER_REGISTRY=docker.io
+FROM ${DOCKER_REGISTRY}/nginx:${VERSION} AS build
 
 # 添加nginx编译依赖
 ARG DOCKER_APT_MIRROR=deb.debian.org
@@ -49,7 +50,7 @@ RUN tar xf nginx-${NGINX_VERSION}.tar.gz \
   && rm -rf /ngx_brotli
 
 # 添加自定义模块
-FROM nginx:${VERSION}
+FROM ${DOCKER_REGISTRY}/nginx:${VERSION}
 
 ARG DOCKER_APT_MIRROR=deb.debian.org
 RUN sed -i "s@deb.debian.org@${DOCKER_APT_MIRROR}@g" /etc/apt/sources.list.d/debian.sources

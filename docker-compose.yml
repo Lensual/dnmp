@@ -55,7 +55,7 @@ services:
     command: busybox crond -f -l 8
   acme-sh:
     profiles: [ acme ]
-    image: neilpang/acme.sh
+    image: ${DOCKER_REGISTRY:-docker.io}/neilpang/acme.sh
     restart: unless-stopped
     network_mode: host
     volumes:

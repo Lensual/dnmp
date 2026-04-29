@@ -3,4 +3,5 @@ services:
     build:
       dockerfile: debian.Dockerfile
       args:
+        DOCKER_REGISTRY: ${DOCKER_REGISTRY:-docker.io}
         DOCKER_APT_MIRROR: ${DOCKER_APT_MIRROR:-deb.debian.org}

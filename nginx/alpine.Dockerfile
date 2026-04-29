@@ -1,5 +1,6 @@
 ARG VERSION=stable-alpine
-FROM nginx:${VERSION} AS build
+ARG DOCKER_REGISTRY=docker.io
+FROM ${DOCKER_REGISTRY}/nginx:${VERSION} AS build
 
 # 添加nginx编译依赖
 ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
@@ -49,7 +50,7 @@ RUN tar xf nginx-${NGINX_VERSION}.tar.gz \
   && apk del .build-deps
 
 # 添加自定义模块
-FROM nginx:${VERSION}
+FROM ${DOCKER_REGISTRY}/nginx:${VERSION}
 
 ARG DOCKER_APK_MIRROR=dl-cdn.alpinelinux.org
 RUN sed -i "s@dl-cdn.alpinelinux.org@${DOCKER_APK_MIRROR}@g" /etc/apk/repositories

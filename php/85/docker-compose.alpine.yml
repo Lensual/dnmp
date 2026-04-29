@@ -3,4 +3,5 @@ services:
     build:
       dockerfile: alpine.Dockerfile
       args:
+        DOCKER_REGISTRY: ${DOCKER_REGISTRY:-docker.io}
         DOCKER_APK_MIRROR: ${DOCKER_APK_MIRROR:-dl-cdn.alpinelinux.org}

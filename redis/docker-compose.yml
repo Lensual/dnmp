@@ -1,7 +1,7 @@
 name: ${DOCKER_COMPOSE_NAMESPACE:-dnmp}
 services:
   redis:
-    image: redis:7-${DIST_VERSION:-alpine}
+    image: ${DOCKER_REGISTRY:-docker.io}/redis:7-${DIST_VERSION:-alpine}
     restart: unless-stopped
     network_mode: host
     volumes:
