@@ -18,12 +18,24 @@ services:
         hard: 524288
     volumes:
       # configs
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl.conf:/etc/nginx/ssl.conf:ro
-      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
-      - ./nginx/wordpress.conf:/etc/nginx/wordpress.conf:ro
-      - ./nginx/templates:/etc/nginx/templates:ro
       - ./nginx/crontabs:/var/spool/cron/crontabs
+      - ./nginx/templates:/etc/nginx/templates:ro
+      - ./nginx/enable-php-56.conf:/etc/nginx/enable-php-56.conf:ro
+      - ./nginx/enable-php-72.conf:/etc/nginx/enable-php-72.conf:ro
+      - ./nginx/enable-php-74.conf:/etc/nginx/enable-php-74.conf:ro
+      - ./nginx/enable-php-80.conf:/etc/nginx/enable-php-80.conf:ro
+      - ./nginx/enable-php-81.conf:/etc/nginx/enable-php-81.conf:ro
+      - ./nginx/enable-php-82.conf:/etc/nginx/enable-php-82.conf:ro
+      - ./nginx/enable-php-83.conf:/etc/nginx/enable-php-83.conf:ro
+      - ./nginx/enable-php-84.conf:/etc/nginx/enable-php-84.conf:ro
+      - ./nginx/enable-php-85.conf:/etc/nginx/enable-php-85.conf:ro
+      - ./nginx/fastcgi_params:/etc/nginx/fastcgi_params:ro
+      - ./nginx/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/pathinfo.conf:/etc/nginx/pathinfo.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
+      - ./nginx/ssl.conf:/etc/nginx/ssl.conf:ro
+      - ./nginx/wordpress.conf:/etc/nginx/wordpress.conf:ro
       # ssl
       - ./nginx/cert:/etc/nginx/cert:ro,z
       - ./nginx/ssl-cert-snakeoil.key:/etc/nginx/ssl-cert-snakeoil.key:ro
