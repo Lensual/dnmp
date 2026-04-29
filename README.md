@@ -252,7 +252,13 @@ composer -V
 `Docker Hub` 镜像拉取可以使用第三方 mirror，在 `.env` 中设置 `DOCKER_REGISTRY`：
 
 ```sh
-DOCKER_REGISTRY=dockerproxy.cn
+DOCKER_REGISTRY=dockerproxy.net
+# DOCKER_REGISTRY=dockerproxy.net
+# DOCKER_REGISTRY=docker.xuanyuan.me
+# DOCKER_REGISTRY=docker.1ms.run
+# DOCKER_REGISTRY=docker.m.daocloud.io
+# DOCKER_REGISTRY=docker.1panel.live
+# DOCKER_REGISTRY=dockerhub.timeweb.cloud
 ```
 
 github访问加速可以在相关`Dockerfile`文件中增加
