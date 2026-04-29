@@ -1,4 +1,6 @@
 ARG DOCKER_REGISTRY=docker.io
+FROM ${DOCKER_REGISTRY}/mlocati/php-extension-installer AS php-extension-installer
+
 FROM ${DOCKER_REGISTRY}/php:8.3.30-fpm-alpine3.23
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
@@ -10,7 +12,7 @@ RUN apk add --no-cache \
     ca-certificates
 
 # 安装php依赖
-COPY --from=${DOCKER_REGISTRY}/mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN install-php-extensions gd
 RUN install-php-extensions pdo_mysql
