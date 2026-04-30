@@ -175,7 +175,7 @@ services:
       service: php85-crond
   openlitespeed:
     profiles: [ openlitespeed ]
-    image: litespeedtech/openlitespeed:${OLS_VERSION:-1.9.0}-${PHP_VERSION:-lsphp85}
+    image: ${DOCKER_REGISTRY:-docker.io}/litespeedtech/openlitespeed:${OLS_VERSION:-1.9.0}-${PHP_VERSION:-lsphp85}
     env_file:
       - .env
     volumes:
