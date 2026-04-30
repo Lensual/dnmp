@@ -64,7 +64,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: daemon
   mysql80:
-    profiles: [ mysql80 ]
+    profiles: [ mysql80, mysql ]
     extends:
       file: mysql/80/docker-compose.yml
       service: mysql80
@@ -74,7 +74,7 @@ services:
       file: mariadb/docker-compose.yml
       service: mariadb
   redis8:
-    profiles: [ redis8 ]
+    profiles: [ redis8, redis ]
     extends:
       file: redis/8/docker-compose.yml
       service: redis8
@@ -104,7 +104,7 @@ services:
       file: php/74/docker-compose.yml
       service: php74
   php74-crond:
-    profiles: [ php74 ]
+    profiles: [ php74, php7 ]
     extends:
       file: php/74/docker-compose.yml
       service: php74-crond
@@ -159,12 +159,12 @@ services:
       file: php/84/docker-compose.yml
       service: php84-crond
   php85:
-    profiles: [ php85 ]
+    profiles: [ php85, php8, php ]
     extends:
       file: php/85/docker-compose.yml
       service: php85
   php85-crond:
-    profiles: [ php85 ]
+    profiles: [ php85, php8, php ]
     extends:
       file: php/85/docker-compose.yml
       service: php85-crond

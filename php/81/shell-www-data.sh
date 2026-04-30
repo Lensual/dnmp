@@ -1,2 +1,2 @@
 #/bin/sh
-docker compose run --user 82 --rm php81 sh
+docker compose run --user 33 --rm php81 sh

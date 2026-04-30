@@ -1,2 +1,2 @@
 #/bin/sh
-docker compose run --user 82 --rm php80 sh
+docker compose run --user 33 --rm php80 sh
