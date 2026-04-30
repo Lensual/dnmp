@@ -23,6 +23,7 @@ Docker Nginx Mysql Php
     - [开启 MySQL](#开启-mysql)
     - [开启 MariaDB](#开启-mariadb)
     - [开启 Redis](#开启-redis)
+    - [开启 OpenLiteSpeed](#开启-openlitespeed)
     - [使用 acme.sh 申请 ssl 证书](#使用-acmesh-申请-ssl-证书)
     - [开启 PHP](#开启-php)
     - [使用 php composer](#使用-php-composer)
@@ -164,6 +165,24 @@ docker compose up -d
 数据目录：`redis/data`
 配置目录：`redis/conf.d`
 日志目录：`redis/logs`
+
+### 开启 OpenLiteSpeed
+
+在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `openlitespeed`：
+
+```sh
+COMPOSE_PROFILES=openlitespeed
+```
+
+然后启动：
+
+```sh
+docker compose up -d
+```
+
+配置目录：`ols/lsws/conf`
+管理界面：`https://your-ip:7080`
+默认管理员：`admin` / `123456`
 
 ### 使用 acme.sh 申请 ssl 证书
 

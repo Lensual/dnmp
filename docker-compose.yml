@@ -174,6 +174,7 @@ services:
       file: php/85/docker-compose.yml
       service: php85-crond
   openlitespeed:
+    profiles: [ openlitespeed ]
     image: litespeedtech/openlitespeed:${OLS_VERSION:-1.9.0}-${PHP_VERSION:-lsphp85}
     env_file:
       - .env
