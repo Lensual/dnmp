@@ -9,7 +9,7 @@ services:
       - ./conf.d:/etc/mysql/conf.d:ro,z
       - ./logs:/var/log/mysql:rw,z
     environment:
-      TZ: ${TZ:-Asia/Shanghai}
+      TZ: ${TZ:-UTC}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-}
       MYSQL_USER: ${MYSQL_USER:-}

@@ -1,0 +1,3 @@
+[submodule "ols"]
+	path = ols
+	url = https://github.com/litespeedtech/ols-docker-env

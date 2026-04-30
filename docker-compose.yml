@@ -4,6 +4,7 @@ services:
     profiles: [ nginx ]
     extends:
       service: nginx
+      # TODO mv into nginx
       file: docker-compose.${DIST_VERSION:-debian}.yml
     build:
       context: nginx
@@ -48,6 +49,8 @@ services:
       - ./wwwroot:/wwwroot:ro,z
       # 共享run
       - ./run:/var/run:rw,z
+    environment:
+      TZ: ${TZ:-UTC}
   nginx-crond:
     profiles: [ nginx ]
     extends:
@@ -63,6 +66,8 @@ services:
       - ./nginx/cert:/acme.sh.d:rw,z
       - /var/run/docker.sock:/var/run/docker.sock
     command: daemon
+    environment:
+      TZ: ${TZ:-UTC}
   mysql80:
     profiles: [ mysql80, mysql ]
     extends:
@@ -168,3 +173,23 @@ services:
     extends:
       file: php/85/docker-compose.yml
       service: php85-crond
+  openlitespeed:
+    image: litespeedtech/openlitespeed:${OLS_VERSION:-1.9.0}-${PHP_VERSION:-lsphp85}
+    env_file:
+      - .env
+    volumes:
+      - ./ols/lsws/conf:/usr/local/lsws/conf
+      - ./ols/lsws/admin-conf:/usr/local/lsws/admin/conf
+      - ./ols/bin/container:/usr/local/bin
+      - ./ols/sites:/var/www/vhosts/
+      - ./ols/acme:/root/.acme.sh/
+      - ./ols/logs:/usr/local/lsws/logs/
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+      - 7080:7080
+    network_mode: host
+    restart: always
+    environment:
+      TZ: ${TZ:-UTC}

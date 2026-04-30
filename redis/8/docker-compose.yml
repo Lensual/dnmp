@@ -12,4 +12,4 @@ services:
       - ./logs:/var/log/redis:rw,z
     command: redis-server /usr/local/etc/redis/redis.conf
     environment:
-      TZ: ${TZ:-Asia/Shanghai}
+      TZ: ${TZ:-UTC}
