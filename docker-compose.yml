@@ -182,9 +182,11 @@ services:
       - ./ols/lsws/conf:/usr/local/lsws/conf
       - ./ols/lsws/admin-conf:/usr/local/lsws/admin/conf
       - ./ols/bin/container:/usr/local/bin
-      - ./ols/sites:/var/www/vhosts/
+      # - ./ols/sites:/var/www/vhosts/
       - ./ols/acme:/root/.acme.sh/
       - ./ols/logs:/usr/local/lsws/logs/
+      # data
+      - ./wwwroot:/wwwroot:ro,z
     ports:
       - 80:80
       - 443:443

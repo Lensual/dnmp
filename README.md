@@ -168,6 +168,12 @@ docker compose up -d
 
 ### 开启 OpenLiteSpeed
 
+初始化 git submodule：
+
+```sh
+git submodule update --init ols
+```
+
 在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `openlitespeed`：
 
 ```sh
