@@ -186,7 +186,7 @@ services:
       - ./ols/acme:/root/.acme.sh/
       - ./ols/logs:/usr/local/lsws/logs/
       # data
-      - ./wwwroot:/wwwroot:ro,z
+      - ./wwwroot:/wwwroot:rw,z
     ports:
       - 80:80
       - 443:443
