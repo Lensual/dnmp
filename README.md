@@ -184,6 +184,16 @@ docker compose up -d
 管理界面：`https://your-ip:7080`
 默认管理员：`admin` / `123456`
 
+管理脚本：
+
+```sh
+# 修改 OpenLiteSpeed 管理界面密码
+./ols-admpass.sh
+
+# 进入 OpenLiteSpeed 容器 shell
+./shell-ols.sh
+```
+
 ### 使用 acme.sh 申请 ssl 证书
 
 使用 acme.sh 申请 ssl 证书：
