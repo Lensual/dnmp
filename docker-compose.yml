@@ -52,6 +52,8 @@ services:
       - ./run:/var/run:rw,z
     environment:
       TZ: ${TZ:-UTC}
+    tmpfs:
+      - /var/cache/nginx:mode=700,uid=101,gid=0
   nginx-crond:
     profiles: [ nginx ]
     extends:
