@@ -38,7 +38,6 @@ services:
       - ./nginx/proxy_streaming.conf:/etc/nginx/proxy_streaming.conf:ro
       - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
       - ./nginx/ssl.conf:/etc/nginx/ssl.conf:ro
-      - ./nginx/websocket.conf:/etc/nginx/websocket.conf:ro
       - ./nginx/wordpress.conf:/etc/nginx/wordpress.conf:ro
       # ssl
       - ./nginx/cert:/etc/nginx/cert:ro,z
