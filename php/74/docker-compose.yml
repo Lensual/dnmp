@@ -13,7 +13,7 @@ services:
       - ../../run:/var/run:rw,z
       - ../../wwwroot:/wwwroot:rw,z
       - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
-      - ./crontabs:/var/spool/cron/crontabs
+      - ./crontabs:/var/spool/cron/crontabs:ro
     network_mode: host
     environment:
       TZ: ${TZ:-UTC}
