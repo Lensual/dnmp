@@ -19,7 +19,6 @@ services:
         hard: 524288
     volumes:
       # configs
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./nginx/crontabs:/var/spool/cron/crontabs:ro
       - ./nginx/templates:/etc/nginx/templates:ro
       - ./nginx/enable-php-56.conf:/etc/nginx/enable-php-56.conf:ro
