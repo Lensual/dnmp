@@ -20,7 +20,7 @@ RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 RUN git clone --depth 1 -b v0.2.5 https://github.com/vozlt/nginx-module-vts.git
 RUN git clone --depth 1 -b master https://github.com/google/ngx_brotli.git \
   && cd ngx_brotli && git checkout a71f9312c2deb28875acc7bacfdd5695a111aa53
-RUN cd ngx_brotli && git submodule update --init
+RUN cd ngx_brotli && git submodule update --init --recursive --depth 1
 RUN git clone -b v0.39 https://github.com/openresty/headers-more-nginx-module
 
 # 编译brotli

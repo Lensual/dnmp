@@ -171,7 +171,7 @@ docker compose up -d
 初始化 git submodule：
 
 ```sh
-git submodule update --init ols
+git submodule update --init --recursive --depth 1 ols
 ```
 
 在 `.env` 中确保 `COMPOSE_PROFILES` 包含 `openlitespeed`：
